@@ -1,23 +1,23 @@
-# git-revision-webpack-plugin
+# git-revision-rspack-plugin
 
-[![npm version](https://badge.fury.io/js/git-revision-webpack-plugin.svg)](https://badge.fury.io/js/git-revision-webpack-plugin)
-[![downloads](https://img.shields.io/npm/dm/git-revision-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/git-revision-webpack-plugin)
-[![Code Climate](https://codeclimate.com/github/pirelenito/git-revision-webpack-plugin/badges/gpa.svg)](https://codeclimate.com/github/pirelenito/git-revision-webpack-plugin)
+<!-- [![npm version](https://badge.fury.io/js/git-revision-rspack-plugin.svg)](https://badge.fury.io/js/git-revision-rspack-plugin)
+[![downloads](https://img.shields.io/npm/dm/git-revision-rspack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/git-revision-rspack-plugin)
+[![Code Climate](https://codeclimate.com/github/pirelenito/git-revision-rspack-plugin/badges/gpa.svg)](https://codeclimate.com/github/pirelenito/git-revision-rspack-plugin) -->
 
-Simple [webpack](https://webpack.js.org/) plugin that generates `VERSION` and `COMMITHASH` files during build based on a local [git](http://www.git-scm.com/) repository.
+Simple [rspack](https://www.rspack.dev/) plugin that generates `VERSION` and `COMMITHASH` files during build based on a local [git](http://www.git-scm.com/) repository.
 
 ## Usage
 
-Given a **webpack 5** project ([check below](#outdated-webpack) for **old webpack versions**), install it as a local development dependency:
+Given a **rspack** project, install it as a local development dependency:
 
 ```bash
-npm install --save-dev git-revision-webpack-plugin
+npm install --save-dev @amarant/git-revision-rspack-plugin
 ```
 
-Then, simply configure it as a plugin in the webpack config:
+Then, simply configure it as a plugin in the rspack config:
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [new GitRevisionPlugin()],
@@ -42,7 +42,7 @@ And (optionally [when branch is enabled](#branch-false)) a `BRANCH` such as:
 master
 ```
 
-## Path Substitutions
+<!-- ## Path Substitutions
 
 It is also possible to use [path substitutions](https://webpack.js.org/configuration/output/#output-filename) on build to get the revision, version or branch as part of output paths.
 
@@ -60,23 +60,23 @@ module.exports = {
     filename: '[name]-[git-revision-hash].js',
   },
 }
-```
+``` -->
 
 ## Plugin API
 
 The `VERSION`, `COMMITHASH`, `LASTCOMMITDATETIME` and `BRANCH` are also exposed through a public API.
 
-Example using the [DefinePlugin](https://webpack.js.org/plugins/define-plugin/#usage):
+Example using the [DefinePlugin](https://www.rspack.dev/config/plugins.html#defineplugin):
 
 ```javascript
-const webpack = require('webpack')
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const rspack = require('@rspack/core')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 const gitRevisionPlugin = new GitRevisionPlugin()
 
 module.exports = {
   plugins: [
     gitRevisionPlugin,
-    new webpack.DefinePlugin({
+    new rspack.DefinePlugin({
       VERSION: JSON.stringify(gitRevisionPlugin.version()),
       COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
       BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
@@ -95,7 +95,7 @@ The plugin requires no configuration by default, but it is possible to configure
 If you need [lightweight tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_lightweight_tags) support, you may turn on `lightweightTags` option in this way:
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -111,7 +111,7 @@ module.exports = {
 If you need branch name support, you may turn on `branch` option in this way:
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -129,7 +129,7 @@ To change the default `git` command used to read the value of `COMMITHASH`.
 This configuration is not not meant to accept arbitrary user input and it is executed by the plugin without any sanitization.
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -147,7 +147,7 @@ To change the default `git` command used to read the value of `VERSION`.
 This configuration is not not meant to accept arbitrary user input and it is executed by the plugin without any sanitization.
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -165,7 +165,7 @@ To change the default `git` command used to read the value of `BRANCH`.
 This configuration is not not meant to accept arbitrary user input and it is executed by the plugin without any sanitization.
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -183,7 +183,7 @@ To change the default `git` command used to read the value of `LASTCOMMITDATETIM
 This configuration is not not meant to accept arbitrary user input and it is executed by the plugin without any sanitization.
 
 ```javascript
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const { GitRevisionPlugin } = require('@amarant/git-revision-rspack-plugin')
 
 module.exports = {
   plugins: [
@@ -193,21 +193,3 @@ module.exports = {
   ],
 }
 ```
-
-## Outdated webpack
-
-If your project is not running on Webpack 5, you will need older versions of this package.
-
-### Webpack 4
-
-```
-npm install git-revision-webpack-plugin@3.0.6
-```
-
-### Webpack 3 or older
-
-```
-npm install git-revision-webpack-plugin@2.5.1
-```
-
-Check [issue 29](https://github.com/pirelenito/git-revision-webpack-plugin/issues/29) for more information.

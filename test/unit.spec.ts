@@ -1,4 +1,4 @@
-import { Compiler } from 'webpack'
+import { Compiler } from '@rspack/core'
 import { GitRevisionPlugin } from '../src'
 
 jest.mock('../src/build-file', () => jest.fn())

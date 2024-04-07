@@ -1,6 +1,6 @@
 import buildFile from './build-file'
 import runGitCommand from './helpers/run-git-command'
-import { Compiler } from 'webpack'
+import { Compiler } from '@rspack/core'
 
 const COMMITHASH_COMMAND = 'rev-parse HEAD'
 const VERSION_COMMAND = 'describe --always'

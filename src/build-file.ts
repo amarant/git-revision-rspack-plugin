@@ -1,5 +1,5 @@
 import runGitCommand from './helpers/run-git-command'
-import { Compiler } from 'webpack'
+import { Compiler } from '@rspack/core'
 
 interface BuildFileOptions {
   compiler: Compiler
@@ -9,12 +9,12 @@ interface BuildFileOptions {
   asset: string
 }
 
-export default function buildFile({ compiler, gitWorkTree, command, replacePattern, asset }: BuildFileOptions) {
+export default function buildFile({ compiler, gitWorkTree, command, /*replacePattern,*/ asset }: BuildFileOptions) {
   let data: string = ''
 
-  compiler.hooks.compilation.tap('GitRevisionWebpackPlugin', compilation => {
+  compiler.hooks.compilation.tap('GitRevisionRspackPlugin', (compilation) => {
     compilation.hooks.optimizeTree.tapAsync('optimize-tree', (_, __, callback) => {
-      runGitCommand(gitWorkTree, command, function(err, res) {
+      runGitCommand(gitWorkTree, command, function (err, res) {
         if (err) {
           return callback(err)
         }
@@ -24,32 +24,16 @@ export default function buildFile({ compiler, gitWorkTree, command, replacePatte
       })
     })
 
-    compilation.hooks.assetPath.tap('GitRevisionWebpackPlugin', (assetPath: any, chunkData: any) => {
-      const path = typeof assetPath === 'function' ? assetPath(chunkData) : assetPath
+    //TODO: implement filename template when the assetPath hook is available
+    // compilation.hooks.assetPath.tap('GitRevisionRspackPlugin', (assetPath: any, chunkData: any) => {
+    //   const path = typeof assetPath === 'function' ? assetPath(chunkData) : assetPath
 
-      if (!data) return path
-      return path.replace(replacePattern, data)
-    })
+    //   if (!data) return path
+    //   return path.replace(replacePattern, data)
+    // })
 
-    compilation.hooks.processAssets.tap('GitRevisionWebpackPlugin', assets => {
-      assets[asset] = {
-        source: function() {
-          return data
-        },
-        size: function() {
-          return data ? data.length : 0
-        },
-        buffer: function() {
-          return Buffer.from(data)
-        },
-        map: function() {
-          return {}
-        },
-        sourceAndMap: function() {
-          return { source: data, map: {} }
-        },
-        updateHash: function() {},
-      }
+    compilation.hooks.processAssets.tap('GitRevisionRspackPlugin', () => {
+      compilation.emitAsset(asset, new compiler.webpack.sources.RawSource(data), {})
     })
   })
 }

@@ -1,5 +1,5 @@
 {
-  "version": "5.0.0",
+  "version": "0.5.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -9,56 +9,44 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pirelenito/git-revision-webpack-plugin.git"
+    "url": "https://github.com/amarant/git-revision-rspack-plugin.git"
   },
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "start": "dts watch",
+    "build": "dts build",
+    "test": "dts test",
+    "lint": "dts lint src",
+    "prepare": "dts build"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0"
+    "@rspack/core": "^0.5.9"
   },
   "prettier": {
     "printWidth": 120,
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "endOfLine": "auto"
   },
-  "name": "git-revision-webpack-plugin",
-  "author": "Paulo Ragonha",
+  "name": "@amarant/git-revision-rspack-plugin",
+  "author": "Arnaud Marant",
   "bugs": {
-    "url": "https://github.com/pirelenito/git-revision-webpack-plugin/issues"
+    "url": "https://github.com/amarant/git-revision-rspack-plugin/issues"
   },
-  "homepage": "https://github.com/pirelenito/git-revision-webpack-plugin",
-  "module": "dist/git-revision-webpack-plugin.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/git-revision-webpack-plugin.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/git-revision-webpack-plugin.esm.js",
-      "limit": "10 KB"
-    }
-  ],
+  "homepage": "https://github.com/amarant/git-revision-rspack-plugin",
+  "module": "dist/git-revision-rspack-plugin.esm.js",
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.2",
-    "@types/fs-extra": "^9.0.11",
-    "@types/webpack": "5.28.0",
+    "@rspack/core": "^0.5.9",
+    "@types/fs-extra": "^11.0.4",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "dts-cli": "^2.0.4",
+    "eslint-plugin-import": "^2.29.1",
     "file-loader": "^6.2.0",
-    "fs-extra": "^9.1.0",
-    "size-limit": "^4.10.2",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.2.0",
-    "typescript": "^4.2.4",
-    "webpack": "^5.28.0"
+    "fs-extra": "^11.2.0",
+    "tslib": "2.2.0",
+    "typescript": "5.1.6"
   }
 }
